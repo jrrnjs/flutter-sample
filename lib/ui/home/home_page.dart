@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/ui/home/tab/list_page.dart';
+
 
 class Home extends StatelessWidget {
   String email;
@@ -25,9 +27,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Container(color: Colors.lime),
+    ListTabPage(),
     Container(color: Colors.cyanAccent),
     Container(color: Colors.pinkAccent)
+  ];
+  final List<String> _title = [
+    'list page',
+    'photo grid page',
+    'more page'
   ];
 
   void onNavigationTapped(int index) {
@@ -40,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('home page'),
+        title: Text(_title[_currentIndex]),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -56,8 +63,8 @@ class _HomePageState extends State<HomePage> {
             title: Text('Photo')
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile')
+            icon: Icon(Icons.more),
+            title: Text('More')
           )
         ],
       ),

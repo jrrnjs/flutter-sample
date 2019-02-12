@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:validate/validate.dart';
-import 'package:flutter_sample/ui/home.dart';
+import 'package:flutter_sample/ui/home/home_page.dart';
 
 class Login extends StatelessWidget {
 
