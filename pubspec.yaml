@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  http:
   validate: 1.7.0
 
 
