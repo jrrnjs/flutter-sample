@@ -6,25 +6,31 @@ import 'dart:math';
 class PhotoTabPage extends StatefulWidget {
   final List<_Photo> _items = [];
   final List<String> _randomKeyword = [
-    'night view',
-    'newyork',
-    'paris',
-    'pizza',
     'balloon',
-    'super car',
-    'space',
-    'university',
+    'ferrari',
     'apple',
-    'orange',
-    'forest',
-    'flowers',
-    'shoes',
-    'sand',
-    'sea',
-    'sky'
+    'rose',
+    'google',
+    'winter',
+    'salty',
+    'cloud',
+    'aws',
+    'flickr',
+    'naver',
+    'news',
+    'premere league',
+    'sonny',
+    'chealsea',
+    'real mardrid',
+    'lion',
+    'tiger',
+    'bear',
+    'duck',
+    'camping'
   ];
 
   String _currentKeyword;
+  int _page;
 
   @override
   State createState() {
@@ -33,35 +39,62 @@ class PhotoTabPage extends StatefulWidget {
 }
 
 class _PhotoTabPageState extends State<PhotoTabPage> {
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController =  ScrollController(
+        initialScrollOffset: 0.0,
+        keepScrollOffset: true
+    );
+    _scrollController.addListener(onScroll);
+    widget._currentKeyword = widget._randomKeyword[0];
+    widget._page = 1;
+    _getImages();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  void onScroll() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      widget._page += 1;
+      _getImages();
+    }
+  }
 
   void _getImages() async {
-    var response = await FlickrApi.getImages(widget._currentKeyword);
+    var response = await FlickrApi.getImages(widget._currentKeyword, widget._page);
     setState(() {
       final cutBody = response.body.substring(14, response.body.length - 1);
       var responseBody = (json.decode(cutBody) as Map<String, dynamic>);
       var result = _FlickrResult.fromJson(responseBody['photos']);
-      widget._items.clear();
       widget._items.addAll(result.photo);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
       body: GridView.count(
         crossAxisCount: 3,
         mainAxisSpacing: 5.0,
         crossAxisSpacing: 5.0,
         children: _buildGridTiles(),
-        controller: ScrollController(
-
-        ),
+        controller: _scrollController,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
         onPressed: () {
           final index = Random.secure().nextInt(widget._randomKeyword.length-1);
           widget._currentKeyword = widget._randomKeyword[index];
+          widget._page = 1;
+          widget._items.clear();
+          _scrollController.animateTo(0.0, duration: Duration(milliseconds: 500), curve: Curves.elasticOut);
           _getImages();
         },
       ),
