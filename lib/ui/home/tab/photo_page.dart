@@ -10,15 +10,10 @@ class PhotoTabPage extends StatefulWidget {
     'ferrari',
     'apple',
     'rose',
-    'google',
     'winter',
-    'salty',
     'cloud',
     'aws',
     'flickr',
-    'naver',
-    'news',
-    'premere league',
     'sonny',
     'chealsea',
     'real mardrid',
@@ -81,7 +76,7 @@ class _PhotoTabPageState extends State<PhotoTabPage> {
   Widget build(BuildContext context) {
    return Scaffold(
       body: GridView.count(
-        crossAxisCount: 3,
+        crossAxisCount: 4,
         mainAxisSpacing: 5.0,
         crossAxisSpacing: 5.0,
         children: _buildGridTiles(),
