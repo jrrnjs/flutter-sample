@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/ui/home/tab/list_page.dart';
 import 'package:flutter_sample/ui/home/tab/photo_page.dart';
+import 'package:flutter_sample/ui/home/tab/more_page.dart';
 
 class Home extends StatelessWidget {
   String email;
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _children = [
     ListTabPage(),
     PhotoTabPage(),
-    Container(color: Colors.pinkAccent)
+    MoreTabPage()
   ];
   final List<String> _title = [
     'list page',
